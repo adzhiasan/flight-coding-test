@@ -45,15 +45,17 @@ namespace Gridnine.FlightCodingTest
 
         private static bool GroundTimeMoreThanTwoHours(Flight flight)
         {
+            TimeSpan groundTime = new TimeSpan();
             var segments = flight.Segments;
             int segmentsNumber = flight.Segments.Count;
 
             for (int i = 1; i < segmentsNumber; i++)
             {
-                TimeSpan groundTime = segments[i].DepartureDate - segments[i - 1].ArrivalDate;
-                if (groundTime.Hours >= 2)
-                    return true;
+                 groundTime += segments[i].DepartureDate - segments[i - 1].ArrivalDate;
+
             }
+            if (groundTime.Hours >= 2)
+                return true;
 
             return false;
         }
